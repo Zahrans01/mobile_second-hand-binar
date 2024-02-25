@@ -1,0 +1,2211 @@
+{
+	"info": {
+		"_postman_id": "b9a74140-004b-4d5d-81fc-a3f25d069200",
+		"name": "Binar_Challenge_Gold_Mobile",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28186863",
+		"_collection_link": "https://www.postman.com/warped-comet-953472/workspace/binarqae15-zahran-syukri/collection/28186863-b9a74140-004b-4d5d-81fc-a3f25d069200?action=share&source=collection_link&creator=28186863"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Registration",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"  pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Email is in a valid format\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.email).to.match(/^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$/);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"updatedAt field is in a valid date format\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.updatedAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/, \"Invalid date format\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Generate a random name\r",
+									"function generateRandomName() {\r",
+									"    const firstNames = [\"John\", \"Alice\", \"Bob\", \"Emma\", \"David\",\"Jhony\"]; // Add more first names as needed\r",
+									"    const lastNames = [\"Smith\", \"Johnson\", \"Doe\", \"Brown\", \"Wilson\"]; // Add more last names as needed\r",
+									"    const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];\r",
+									"    const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];\r",
+									"    return `${randomFirstName} ${randomLastName}`;\r",
+									"}\r",
+									"const randomName = generateRandomName();\r",
+									"// Store the random name in an environment variable\r",
+									"pm.environment.set('random_name', randomName);\r",
+									"\r",
+									"\r",
+									"// Generate a random email address\r",
+									"function generateRandomEmail() {\r",
+									"    const username = Math.random().toString(36).substring(2, 12); // Generate a random username\r",
+									"    const domain = 'example.com'; // Replace 'example.com' with your desired domain\r",
+									"    return `${username}@${domain}`;\r",
+									"}\r",
+									"const randomEmail = generateRandomEmail();\r",
+									"// Store the random email in an environment variable\r",
+									"pm.environment.set('random_email', randomEmail);\r",
+									"\r",
+									"// Generate a random-looking Indonesian phone number\r",
+									"function generateRandomIndonesianPhoneNumber() {\r",
+									"    const prefixOptions = [\"081\", \"082\", \"085\", \"087\", \"089\"];\r",
+									"    const selectedPrefix = prefixOptions[Math.floor(Math.random() * prefixOptions.length)];\r",
+									"    const remainingDigits = Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');\r",
+									"    return selectedPrefix + remainingDigits;\r",
+									"}\r",
+									"const randomIndonesianPhoneNumber = generateRandomIndonesianPhoneNumber();\r",
+									"// Store the random Indonesian phone number in an environment variable\r",
+									"pm.environment.set('random_indonesian_phone_number', randomIndonesianPhoneNumber);\r",
+									"\r",
+									"// Generate a random-looking Indonesian address\r",
+									"function generateRandomIndonesianAddress() {\r",
+									"    const streets = [\"Jalan Merdeka\", \"Jalan Pahlawan\", \"Jalan Raya\", \"Jalan Cendrawasih\", \"Jalan Budi Utomo\", \"Jalan Diponegoro\"];\r",
+									"    const cities = [\"Jakarta\", \"Surabaya\", \"Bandung\", \"Yogyakarta\", \"Medan\", \"Semarang\"];\r",
+									"    const provinces = [\"Jakarta\", \"East Java\", \"West Java\", \"Yogyakarta\", \"North Sumatra\", \"Central Java\"];\r",
+									"\r",
+									"    const randomStreet = streets[Math.floor(Math.random() * streets.length)];\r",
+									"    const randomCity = cities[Math.floor(Math.random() * cities.length)];\r",
+									"    const randomProvince = provinces[Math.floor(Math.random() * provinces.length)];\r",
+									"\r",
+									"    return `${randomStreet}, ${randomCity}, ${randomProvince}`;\r",
+									"}\r",
+									"const randomIndonesianAddress = generateRandomIndonesianAddress();\r",
+									"\r",
+									"// Store the random Indonesian address in an environment variable\r",
+									"pm.environment.set('random_indonesian_address', randomIndonesianAddress);\r",
+									"// Extract the city from the generated address\r",
+									"const city = randomIndonesianAddress.split(', ')[1];\r",
+									"// Store the extracted city in an environment variable\r",
+									"pm.environment.set('random_indonesian_city', city);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "full_name",
+									"value": "{{random_name}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{random_email}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "{{random_indonesian_phone_number}}",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "{{random_indonesian_address}}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "city",
+									"value": "{{random_indonesian_city}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 - User Registered",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "full_name",
+											"value": "{{random_name}}",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "{{random_email}}",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "phone_number",
+											"value": "{{random_indonesian_phone_number}}",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "{{random_indonesian_address}}",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "city",
+											"value": "{{random_indonesian_city}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Nov 2023 17:45:15 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "280"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"118-XmF0q0uZDX3IKPZmLvxMt/WyGzg\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 188937,\n    \"full_name\": \"Bob Smith\",\n    \"email\": \"bhx2gwk6zo@example.com\",\n    \"password\": \"$2b$10$igAq2CNUO524AcXuBSSmB.WhrnMOsAQd1YvMWAmp22o7.G/hvB/PS\",\n    \"phone_number\": \"\",\n    \"address\": \"\",\n    \"image_url\": null,\n    \"city\": \"\",\n    \"updatedAt\": \"2023-11-08T17:45:15.563Z\",\n    \"createdAt\": \"2023-11-08T17:45:15.563Z\"\n}"
+						},
+						{
+							"name": "401 - Email Already Exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "full_name",
+											"value": "{{random_name}}",
+											"type": "text"
+										},
+										{
+											"key": "email",
+											"value": "n8wpp6dwdy@example.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "text"
+										},
+										{
+											"key": "phone_number",
+											"value": "{{random_indonesian_phone_number}}",
+											"type": "text"
+										},
+										{
+											"key": "address",
+											"value": "{{random_indonesian_address}}",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": []
+										},
+										{
+											"key": "city",
+											"value": "{{random_indonesian_city}}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Nov 2023 17:46:45 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-BXtdvYPolQA6UQKh/HseVBlNfJ8\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"badRequestEmail\",\n    \"message\": \"Email already exists\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.environment.set(\"access_token\", jsonData.access_token);\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test('Response status code is 201', function () {\r",
+									"    pm.expect(pm.response.code).to.equal(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Email is in a valid format\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"\r",
+									"  pm.expect(responseData.email).to.match(/^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$/);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Access-Control-Request-Headers",
+								"value": "schema",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{random_email}}\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 - OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{random_email}}\",\r\n  \"password\": \"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Nov 2023 17:51:42 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "232"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e8-ogEZ82CMljOinPZ15L5tHuH+WdQ\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 188941,\n    \"name\": \"Bob Brown\",\n    \"email\": \"eqkqasr334@example.com\",\n    \"access_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVxa3Fhc3IzMzRAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTk0NjU5MDJ9.OqIVj60BbD0WMe68NtBYsvQsNuGjUv8lD2MGITOCsoE\"\n}"
+						},
+						{
+							"name": "401 - Email/Pass are Wrong",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"email\": \"{{random_email}}\",\r\n  \"password\": \"12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 08 Nov 2023 17:52:58 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "69"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"45-RV4qmFsfCHBniDqVMBStgbu4r64\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"wrongEmailPassword\",\n    \"message\": \"email or password are wrong\"\n}"
+						}
+					]
+				}
+			],
+			"description": "**Akun Seller:**\n\n**Akun Buyer:**"
+		},
+		{
+			"name": "Seller - Product",
+			"item": [
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Define an array of random IT computer product names\r",
+									"const computerProductNames = [\r",
+									"    \"Laptop\", \"Desktop Computer\", \"Monitor\", \"Keyboard\", \"Mouse\", \"Router\", \"External Hard Drive\",\r",
+									"    \"Webcam\", \"Printer\", \"Scanner\", \"Graphics Card\", \"Motherboard\", \"CPU\", \"RAM\", \"SSD\",\r",
+									"    \"Software License\", \"Tablet\", \"Server\", \"UPS\", \"Network Switch\"\r",
+									"];\r",
+									"// Generate a random IT computer product name\r",
+									"function generateRandomComputerProductName() {\r",
+									"    const randomIndex = Math.floor(Math.random() * computerProductNames.length);\r",
+									"    return computerProductNames[randomIndex];\r",
+									"}\r",
+									"const randomComputerProductName = generateRandomComputerProductName();\r",
+									"// Store the random computer product name in an environment variable\r",
+									"pm.environment.set('random_computer_product_name', randomComputerProductName);\r",
+									"\r",
+									"// Define an array of random product descriptions\r",
+									"const productDescriptions = [\r",
+									"    \"High-performance and reliable\",\r",
+									"    \"Sleek and modern design\",\r",
+									"    \"Built to last with top-quality materials\",\r",
+									"    \"Versatile and easy to use\",\r",
+									"    \"Cutting-edge technology for superior performance\",\r",
+									"    \"Ergonomically designed for comfort\",\r",
+									"    \"Enhance your productivity with this product\",\r",
+									"    \"Experience the future of technology\",\r",
+									"    \"Affordable and feature-packed\",\r",
+									"    \"Innovative and stylish\",\r",
+									"    \"Ideal for both personal and professional use\",\r",
+									"    \"Eco-friendly and energy-efficient\",\r",
+									"    \"Seamless connectivity and compatibility\",\r",
+									"    \"Get the job done with ease\",\r",
+									"    \"Upgrade your setup with this exceptional product\",\r",
+									"    \"Stay ahead with the latest in tech\",\r",
+									"];\r",
+									"\r",
+									"// Generate a random product description\r",
+									"function generateRandomProductDescription() {\r",
+									"    const randomIndex = Math.floor(Math.random() * productDescriptions.length);\r",
+									"    return productDescriptions[randomIndex];\r",
+									"}\r",
+									"const randomProductDescription = generateRandomProductDescription();\r",
+									"// Store the random product description in an environment variable\r",
+									"pm.environment.set('random_product_description', randomProductDescription);\r",
+									"\r",
+									"// Generate a random product price\r",
+									"function generateRandomProductPrice(min, max, decimalPlaces) {\r",
+									"    const price = (Math.random() * (max - min) + min).toFixed(decimalPlaces);\r",
+									"    return parseFloat(price).toFixed(decimalPlaces);\r",
+									"}\r",
+									"const minPrice = 100000.00; // Define the minimum price\r",
+									"const maxPrice = 5000000.00; // Define the maximum price\r",
+									"const decimalPlaces = 0; // Define the number of decimal places\r",
+									"const randomProductPrice = generateRandomProductPrice(minPrice, maxPrice, decimalPlaces);\r",
+									"// Store the random product price in an environment variable\r",
+									"pm.environment.set('random_product_price', randomProductPrice);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Name is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.name).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Base price is a non-negative number\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.base_price).to.be.a('number').and.to.be.at.least(0);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"User ID is a non-negative integer\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.user_id).to.exist.and.to.be.a('number');\r",
+									"    pm.expect(responseData.user_id).to.be.at.least(0);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Access-Control-Request-Headers",
+								"value": "body",
+								"type": "text"
+							},
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{{random_computer_product_name}}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{{random_product_description}}",
+									"type": "text"
+								},
+								{
+									"key": "base_price",
+									"value": "{{random_product_price}}",
+									"type": "text"
+								},
+								{
+									"key": "category_ids",
+									"value": "1",
+									"contentType": "",
+									"type": "text"
+								},
+								{
+									"key": "location",
+									"value": "{{random_indonesian_city}}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "barang-elektronik_20180823_121413.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/seller/product",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"seller",
+								"product"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 - Product Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Access-Control-Request-Headers",
+										"value": "body",
+										"type": "text"
+									},
+									{
+										"key": "Access_Token",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZiMWtia2h2aTZAZXhhbXBsZS5jb20iLCJpYXQiOjE2OTk2MTk4NzN9.Bc6qj0kx8QSes3senaNvvuMl-_u-DNpgEe0IwlNxlqw",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "{{random_computer_product_name}}",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "{{random_product_description}}",
+											"type": "text"
+										},
+										{
+											"key": "base_price",
+											"value": "{{random_product_price}}",
+											"type": "text"
+										},
+										{
+											"key": "category_ids",
+											"value": "1",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "{{random_indonesian_city}}",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "barang-elektronik_20180823_121413.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/seller/product",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"seller",
+										"product"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 12:39:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "491"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1eb-MXIsPLEF8N6JpX5XQP8ICKqEM9U\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 96799,\n    \"name\": \"Printer\",\n    \"description\": \"Upgrade your setup with this exceptional product\",\n    \"base_price\": 2437773,\n    \"location\": \"Bandung\",\n    \"user_id\": 188997,\n    \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699619996992-barang-elektronik_20180823_121413.jpg?alt=media\",\n    \"image_name\": \"PR-1699619996992-barang-elektronik_20180823_121413.jpg\",\n    \"updatedAt\": \"2023-11-10T12:39:57.036Z\",\n    \"createdAt\": \"2023-11-10T12:39:57.036Z\",\n    \"status\": \"available\"\n}"
+						},
+						{
+							"name": "400 - Max Products",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Access-Control-Request-Headers",
+										"value": "body",
+										"type": "text"
+									},
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "{{random_computer_product_name}}",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "{{random_product_description}}",
+											"type": "text"
+										},
+										{
+											"key": "base_price",
+											"value": "{{random_product_price}}",
+											"type": "text"
+										},
+										{
+											"key": "category_ids",
+											"value": "1",
+											"contentType": "",
+											"type": "text"
+										},
+										{
+											"key": "location",
+											"value": "{{random_indonesian_city}}",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "barang-elektronik_20180823_121413.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/seller/product",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"seller",
+										"product"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:23:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "49"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"31-heXN8p9ux/SafKSAaHpTjDbbvUQ\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"maxProducts\",\n    \"message\": \"Max 5 products\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response is an array with at least one element\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array').and.to.have.lengthOf.at.least(1);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the 'Categories' array is present and contains expected number of elements\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"\r",
+									"  pm.expect(responseData).to.be.an('array');\r",
+									"  pm.expect(responseData).to.have.lengthOf.at.least(1, \"Array should not be empty\");\r",
+									"  \r",
+									"  responseData.forEach(function(product){\r",
+									"      pm.expect(product.Categories).to.exist.and.to.be.an('array');\r",
+									"      pm.expect(product.Categories).to.have.lengthOf(1, \"Expected number of elements in 'Categories' array is 1\");\r",
+									"  });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/seller/product",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"seller",
+								"product"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 - Products Listed",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/seller/product",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"seller",
+										"product"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:40:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2643"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a53-wLMQ7aw1ozky7iAfGiKdATex0tY\""
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 96807,\n        \"name\": \"Desktop Computer\",\n        \"description\": \"Ideal for both personal and professional use\",\n        \"base_price\": 4386781,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622625477-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"image_name\": \"PR-1699622625477-barang-elektronik_20180823_121413.jpg\",\n        \"location\": \"Medan\",\n        \"user_id\": 189002,\n        \"status\": \"available\",\n        \"createdAt\": \"2023-11-10T13:23:45.527Z\",\n        \"updatedAt\": \"2023-11-10T13:23:45.527Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    },\n    {\n        \"id\": 96808,\n        \"name\": \"RAM\",\n        \"description\": \"Ideal for both personal and professional use\",\n        \"base_price\": 4794215,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622626825-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"image_name\": \"PR-1699622626825-barang-elektronik_20180823_121413.jpg\",\n        \"location\": \"Medan\",\n        \"user_id\": 189002,\n        \"status\": \"available\",\n        \"createdAt\": \"2023-11-10T13:23:46.885Z\",\n        \"updatedAt\": \"2023-11-10T13:23:46.885Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    },\n    {\n        \"id\": 96809,\n        \"name\": \"Monitor\",\n        \"description\": \"Enhance your productivity with this product\",\n        \"base_price\": 3416745,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622628153-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"image_name\": \"PR-1699622628153-barang-elektronik_20180823_121413.jpg\",\n        \"location\": \"Medan\",\n        \"user_id\": 189002,\n        \"status\": \"available\",\n        \"createdAt\": \"2023-11-10T13:23:48.191Z\",\n        \"updatedAt\": \"2023-11-10T13:23:48.191Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    },\n    {\n        \"id\": 96810,\n        \"name\": \"Webcam\",\n        \"description\": \"Eco-friendly and energy-efficient\",\n        \"base_price\": 4105738,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622629434-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"image_name\": \"PR-1699622629434-barang-elektronik_20180823_121413.jpg\",\n        \"location\": \"Medan\",\n        \"user_id\": 189002,\n        \"status\": \"available\",\n        \"createdAt\": \"2023-11-10T13:23:49.479Z\",\n        \"updatedAt\": \"2023-11-10T13:23:49.479Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    },\n    {\n        \"id\": 96806,\n        \"name\": \"UPS\",\n        \"description\": \"Upgrade your setup with this exceptional product\",\n        \"base_price\": 3544829,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622623226-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"image_name\": \"PR-1699622623226-barang-elektronik_20180823_121413.jpg\",\n        \"location\": \"Medan\",\n        \"user_id\": 189002,\n        \"status\": \"available\",\n        \"createdAt\": \"2023-11-10T13:23:43.340Z\",\n        \"updatedAt\": \"2023-11-10T13:23:43.340Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "List Product By id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the Categories array is present and contains at least one element\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.Categories).to.exist.and.to.be.an('array').and.to.have.lengthOf.at.least(1);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate that id is a non-negative integer\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.id).to.be.a('number');\r",
+									"    pm.expect(responseData.id).to.be.at.least(0, \"id should be a non-negative integer\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that the name is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/seller/product/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"seller",
+								"product",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "96807"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 - Product Listed By id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/seller/product/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"seller",
+										"product",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "96807"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:42:10 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "538"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"21a-XYyTwLF1OK+Wp8EwdOs/CHB+7ZQ\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 96807,\n    \"name\": \"Desktop Computer\",\n    \"description\": \"Ideal for both personal and professional use\",\n    \"base_price\": 4386781,\n    \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622625477-barang-elektronik_20180823_121413.jpg?alt=media\",\n    \"image_name\": \"PR-1699622625477-barang-elektronik_20180823_121413.jpg\",\n    \"location\": \"Medan\",\n    \"user_id\": 189002,\n    \"status\": \"available\",\n    \"createdAt\": \"2023-11-10T13:23:45.527Z\",\n    \"updatedAt\": \"2023-11-10T13:23:45.527Z\",\n    \"Categories\": [\n        {\n            \"id\": 1,\n            \"name\": \"Elektronik\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/seller/product/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"seller",
+								"product",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "96806"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 - Product Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/seller/product/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"seller",
+										"product",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "96806"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:42:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2e-ilaVDX22URNugUcJ6MFd2mUBTdM\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"OK\",\n    \"msg\": \"Product has been deleted\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Buyer - Order",
+			"item": [
+				{
+					"name": "Create Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Price is a non-negative number\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.price).to.exist.and.to.be.a('number');\r",
+									"    pm.expect(responseData.price).to.be.at.least(0);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"product_id\": 96810,\r\n  \"bid_price\": {{random_product_price}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/buyer/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"buyer",
+								"order"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "201 - Order Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"product_id\": 96810,\r\n  \"bid_price\": {{random_product_price}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/buyer/order",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"buyer",
+										"order"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:44:07 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "426"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1aa-TwS1YdsgZryvy8lLAj/KaVuSTvo\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 46683,\n    \"buyer_id\": 188999,\n    \"product_id\": 96810,\n    \"price\": 2566862,\n    \"product_name\": \"Webcam\",\n    \"base_price\": 4105738,\n    \"image_product\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622629434-barang-elektronik_20180823_121413.jpg?alt=media\",\n    \"transaction_date\": \"2023-11-10T13:44:07.947Z\",\n    \"updatedAt\": \"2023-11-10T13:44:07.948Z\",\n    \"createdAt\": \"2023-11-10T13:44:07.948Z\",\n    \"status\": \"pending\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the response is an array\", function () {\r",
+									"  pm.expect(pm.response.json()).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the 'name' field in the 'Product' object is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+									"    responseData.forEach(function (order) {\r",
+									"        pm.expect(order.Product).to.be.an('object').that.has.property('name').that.is.a('string').and.is.not.empty;\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the 'full_name' field in the 'User' object is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function (order) {\r",
+									"        pm.expect(order.User).to.be.an('object');\r",
+									"        pm.expect(order.User.full_name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/buyer/order",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"buyer",
+								"order"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 - Fetch Orders",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/buyer/order",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"buyer",
+										"order"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:44:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4423"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1147-vqNC1PrUuTN3C0Rn1KQp78SpFQM\""
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 46680,\n        \"product_id\": 96797,\n        \"buyer_id\": 188999,\n        \"price\": 3108301,\n        \"transaction_date\": \"2023-11-10T12:59:27.373Z\",\n        \"product_name\": \"Mouse\",\n        \"base_price\": 1603001,\n        \"image_product\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699619901227-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"status\": \"pending\",\n        \"Product\": {\n            \"name\": \"Mouse\",\n            \"description\": \"Cutting-edge technology for superior performance\",\n            \"base_price\": 1603001,\n            \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699619901227-barang-elektronik_20180823_121413.jpg?alt=media\",\n            \"image_name\": \"PR-1699619901227-barang-elektronik_20180823_121413.jpg\",\n            \"location\": \"Bandung\",\n            \"user_id\": 188997,\n            \"status\": \"available\",\n            \"User\": {\n                \"id\": 188997,\n                \"full_name\": \"Jhony Brown\",\n                \"email\": \"fb1kbkhvi6@example.com\",\n                \"phone_number\": \"087777125247\",\n                \"address\": \"Jalan Merdeka, Bandung, North Sumatra\",\n                \"city\": \"Bandung\"\n            }\n        },\n        \"User\": {\n            \"id\": 188999,\n            \"full_name\": \"Emma Wilson\",\n            \"email\": \"m4b45wmkj5@example.com\",\n            \"phone_number\": \"081976595552\",\n            \"address\": \"Jalan Cendrawasih, Medan, Central Java\",\n            \"city\": \"Medan\"\n        }\n    },\n    {\n        \"id\": 46681,\n        \"product_id\": 96800,\n        \"buyer_id\": 188999,\n        \"price\": 3108301,\n        \"transaction_date\": \"2023-11-10T12:59:47.500Z\",\n        \"product_name\": \"Monitor\",\n        \"base_price\": 1372733,\n        \"image_product\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699620570957-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"status\": \"pending\",\n        \"Product\": {\n            \"name\": \"Monitor\",\n            \"description\": \"Built to last with top-quality materials\",\n            \"base_price\": 1372733,\n            \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699620570957-barang-elektronik_20180823_121413.jpg?alt=media\",\n            \"image_name\": \"PR-1699620570957-barang-elektronik_20180823_121413.jpg\",\n            \"location\": \"Bandung\",\n            \"user_id\": 188997,\n            \"status\": \"available\",\n            \"User\": {\n                \"id\": 188997,\n                \"full_name\": \"Jhony Brown\",\n                \"email\": \"fb1kbkhvi6@example.com\",\n                \"phone_number\": \"087777125247\",\n                \"address\": \"Jalan Merdeka, Bandung, North Sumatra\",\n                \"city\": \"Bandung\"\n            }\n        },\n        \"User\": {\n            \"id\": 188999,\n            \"full_name\": \"Emma Wilson\",\n            \"email\": \"m4b45wmkj5@example.com\",\n            \"phone_number\": \"081976595552\",\n            \"address\": \"Jalan Cendrawasih, Medan, Central Java\",\n            \"city\": \"Medan\"\n        }\n    },\n    {\n        \"id\": 46682,\n        \"product_id\": 96801,\n        \"buyer_id\": 188999,\n        \"price\": 1000000,\n        \"transaction_date\": \"2023-11-10T13:02:38.261Z\",\n        \"product_name\": \"Scanner\",\n        \"base_price\": 4351549,\n        \"image_product\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699620572723-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"status\": \"pending\",\n        \"Product\": {\n            \"name\": \"Scanner\",\n            \"description\": \"Built to last with top-quality materials\",\n            \"base_price\": 4351549,\n            \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699620572723-barang-elektronik_20180823_121413.jpg?alt=media\",\n            \"image_name\": \"PR-1699620572723-barang-elektronik_20180823_121413.jpg\",\n            \"location\": \"Bandung\",\n            \"user_id\": 188997,\n            \"status\": \"available\",\n            \"User\": {\n                \"id\": 188997,\n                \"full_name\": \"Jhony Brown\",\n                \"email\": \"fb1kbkhvi6@example.com\",\n                \"phone_number\": \"087777125247\",\n                \"address\": \"Jalan Merdeka, Bandung, North Sumatra\",\n                \"city\": \"Bandung\"\n            }\n        },\n        \"User\": {\n            \"id\": 188999,\n            \"full_name\": \"Emma Wilson\",\n            \"email\": \"m4b45wmkj5@example.com\",\n            \"phone_number\": \"081976595552\",\n            \"address\": \"Jalan Cendrawasih, Medan, Central Java\",\n            \"city\": \"Medan\"\n        }\n    },\n    {\n        \"id\": 46683,\n        \"product_id\": 96810,\n        \"buyer_id\": 188999,\n        \"price\": 2566862,\n        \"transaction_date\": \"2023-11-10T13:44:07.947Z\",\n        \"product_name\": \"Webcam\",\n        \"base_price\": 4105738,\n        \"image_product\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622629434-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"status\": \"pending\",\n        \"Product\": {\n            \"name\": \"Webcam\",\n            \"description\": \"Eco-friendly and energy-efficient\",\n            \"base_price\": 4105738,\n            \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699622629434-barang-elektronik_20180823_121413.jpg?alt=media\",\n            \"image_name\": \"PR-1699622629434-barang-elektronik_20180823_121413.jpg\",\n            \"location\": \"Medan\",\n            \"user_id\": 189002,\n            \"status\": \"available\",\n            \"User\": {\n                \"id\": 189002,\n                \"full_name\": \"Jhony Wilson\",\n                \"email\": \"zawji61xud@example.com\",\n                \"phone_number\": \"085830841102\",\n                \"address\": \"Jalan Pahlawan, Medan, Central Java\",\n                \"city\": \"Medan\"\n            }\n        },\n        \"User\": {\n            \"id\": 188999,\n            \"full_name\": \"Emma Wilson\",\n            \"email\": \"m4b45wmkj5@example.com\",\n            \"phone_number\": \"081976595552\",\n            \"address\": \"Jalan Cendrawasih, Medan, Central Java\",\n            \"city\": \"Medan\"\n        }\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Fetch Orders By id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the structure and data of the response\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"    pm.expect(pm.response.text()).to.equal(\"null\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/buyer/order/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"buyer",
+								"order",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "46680"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Fetch Orders By id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/buyer/order/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"buyer",
+										"order",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "46680"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:45:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1111"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"457-ADROa7JZBwajXeGqE/RtBTUwsZU\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 46680,\n    \"product_id\": 96797,\n    \"buyer_id\": 188999,\n    \"price\": 3108301,\n    \"transaction_date\": \"2023-11-10T12:59:27.373Z\",\n    \"product_name\": \"Mouse\",\n    \"base_price\": 1603001,\n    \"image_product\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699619901227-barang-elektronik_20180823_121413.jpg?alt=media\",\n    \"status\": \"pending\",\n    \"Product\": {\n        \"name\": \"Mouse\",\n        \"description\": \"Cutting-edge technology for superior performance\",\n        \"base_price\": 1603001,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699619901227-barang-elektronik_20180823_121413.jpg?alt=media\",\n        \"image_name\": \"PR-1699619901227-barang-elektronik_20180823_121413.jpg\",\n        \"location\": \"Bandung\",\n        \"user_id\": 188997,\n        \"status\": \"available\",\n        \"User\": {\n            \"id\": 188997,\n            \"full_name\": \"Jhony Brown\",\n            \"email\": \"fb1kbkhvi6@example.com\",\n            \"phone_number\": \"087777125247\",\n            \"address\": \"Jalan Merdeka, Bandung, North Sumatra\",\n            \"city\": \"Bandung\"\n        }\n    },\n    \"User\": {\n        \"id\": 188999,\n        \"full_name\": \"Emma Wilson\",\n        \"email\": \"m4b45wmkj5@example.com\",\n        \"phone_number\": \"081976595552\",\n        \"address\": \"Jalan Cendrawasih, Medan, Central Java\",\n        \"city\": \"Medan\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit Order By id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Price is a non-negative number\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.price).to.exist;\r",
+									"    pm.expect(responseData.price).to.be.a('number');\r",
+									"    pm.expect(responseData.price).to.be.at.least(0, \"Price should be a non-negative number\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Transaction_date is in valid date format\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.transaction_date).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/, \"Transaction_date is not in valid date format\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify that the 'status' field is one of the expected values\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.status).to.exist.and.to.be.oneOf(['pending', 'processing', 'shipped', 'delivered']);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bid_price\": 1000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/buyer/order/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"buyer",
+								"order",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "46680"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Orders Edited By id",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"bid_price\": 1000000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/buyer/order/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"buyer",
+										"order",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "46680"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:45:44 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "425"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1a9-wIwlUnsfVnlgLkKYdjbgXxuZE24\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 46680,\n    \"product_id\": 96797,\n    \"buyer_id\": 188999,\n    \"price\": 1000000,\n    \"transaction_date\": \"2023-11-10T12:59:27.373Z\",\n    \"product_name\": \"Mouse\",\n    \"base_price\": 1603001,\n    \"image_product\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699619901227-barang-elektronik_20180823_121413.jpg?alt=media\",\n    \"status\": \"pending\",\n    \"createdAt\": \"2023-11-10T12:59:27.373Z\",\n    \"updatedAt\": \"2023-11-10T13:45:44.581Z\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Buyer - Product",
+			"item": [
+				{
+					"name": "List Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Access-Control-Request-Headers",
+								"value": "body",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/buyer/product?status&category_id=1&search=Mouse&page=5&per_page=5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"buyer",
+								"product"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": null,
+									"description": "query "
+								},
+								{
+									"key": "category_id",
+									"value": "1",
+									"description": "query "
+								},
+								{
+									"key": "search",
+									"value": "Mouse",
+									"description": "query "
+								},
+								{
+									"key": "page",
+									"value": "5",
+									"description": "query "
+								},
+								{
+									"key": "per_page",
+									"value": "5",
+									"description": "query "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 - Products Listed",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									},
+									{
+										"key": "Access-Control-Request-Headers",
+										"value": "body",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/buyer/product?status&category_id=1&search=Mouse&page=5&per_page=5",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"buyer",
+										"product"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": null,
+											"description": "query "
+										},
+										{
+											"key": "category_id",
+											"value": "1",
+											"description": "query "
+										},
+										{
+											"key": "search",
+											"value": "Mouse",
+											"description": "query "
+										},
+										{
+											"key": "page",
+											"value": "5",
+											"description": "query "
+										},
+										{
+											"key": "per_page",
+											"value": "5",
+											"description": "query "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:56:58 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2297"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"8f9-tmqSx+Jhuviddsu3YnN0uUNtK8Q\""
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 44557,\n        \"name\": \"\\\"mouse\\\"\",\n        \"description\": \"\\\"mouse laptop\\\"\",\n        \"base_price\": 125000,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1674403472075-concrete_pump.jpg?alt=media\",\n        \"image_name\": \"PR-1674403472075-concrete_pump.jpg\",\n        \"location\": \"\\\"Jakarta\\\"\",\n        \"user_id\": 97198,\n        \"status\": \"available\",\n        \"createdAt\": \"2023-01-22T16:04:32.089Z\",\n        \"updatedAt\": \"2023-01-22T16:04:32.089Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    },\n    {\n        \"id\": 779,\n        \"name\": \"Mouse\",\n        \"description\": \"Aman, tahan lama, bagus banget\",\n        \"base_price\": 200000,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1658723914791-image.jpg?alt=media\",\n        \"image_name\": \"PR-1658723914791-image.jpg\",\n        \"location\": \"Jakarta\",\n        \"user_id\": 177,\n        \"status\": \"available\",\n        \"createdAt\": \"2022-07-25T04:38:12.740Z\",\n        \"updatedAt\": \"2022-07-25T04:59:10.364Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    },\n    {\n        \"id\": 1188,\n        \"name\": \"Mouse\",\n        \"description\": \"Bluetooth Mouse\",\n        \"base_price\": 100000,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1661139089922-bluetooth_mouse.jpg?alt=media\",\n        \"image_name\": \"PR-1661139089922-bluetooth_mouse.jpg\",\n        \"location\": \"Batam\",\n        \"user_id\": 686,\n        \"status\": \"available\",\n        \"createdAt\": \"2022-08-22T03:31:29.928Z\",\n        \"updatedAt\": \"2022-08-30T03:27:40.460Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    },\n    {\n        \"id\": 1189,\n        \"name\": \"Mouse\",\n        \"description\": \"Bluetooth Mouse\",\n        \"base_price\": 100000,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1661139204032-bluetooth_mouse.jpg?alt=media\",\n        \"image_name\": \"PR-1661139204032-bluetooth_mouse.jpg\",\n        \"location\": \"Batam\",\n        \"user_id\": 686,\n        \"status\": \"available\",\n        \"createdAt\": \"2022-08-22T03:33:24.037Z\",\n        \"updatedAt\": \"2022-08-30T03:09:31.416Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    },\n    {\n        \"id\": 1193,\n        \"name\": \"Mouse\",\n        \"description\": \"Bluetooth Mouse\",\n        \"base_price\": 100000,\n        \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1661151332084-bluetooth_mouse.jpg?alt=media\",\n        \"image_name\": \"PR-1661151332084-bluetooth_mouse.jpg\",\n        \"location\": \"Batam\",\n        \"user_id\": 686,\n        \"status\": \"available\",\n        \"createdAt\": \"2022-08-22T06:55:32.095Z\",\n        \"updatedAt\": \"2022-08-22T06:55:32.095Z\",\n        \"Categories\": [\n            {\n                \"id\": 1,\n                \"name\": \"Elektronik\"\n            }\n        ]\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "List Product By id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Name is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.name).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Name should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Description is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"\r",
+									"  pm.expect(responseData.description).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Base price is a non-negative number\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.base_price).to.be.a('number');\r",
+									"    pm.expect(responseData.base_price).to.be.at.least(0, \"Base price should not be negative\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "access_token",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/buyer/product/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"buyer",
+								"product",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "96797"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200 - Product Listed By id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "access_token",
+										"value": "{{access_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/buyer/product/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"buyer",
+										"product",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "96797"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx/1.18.0"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 10 Nov 2023 13:53:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "727"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d7-5BQCl6s8PMCOKecy2wQVTNoJt28\""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 96797,\n    \"name\": \"Mouse\",\n    \"description\": \"Cutting-edge technology for superior performance\",\n    \"base_price\": 1603001,\n    \"image_url\": \"https://firebasestorage.googleapis.com/v0/b/market-final-project.appspot.com/o/products%2FPR-1699619901227-barang-elektronik_20180823_121413.jpg?alt=media\",\n    \"image_name\": \"PR-1699619901227-barang-elektronik_20180823_121413.jpg\",\n    \"location\": \"Bandung\",\n    \"user_id\": 188997,\n    \"status\": \"available\",\n    \"createdAt\": \"2023-11-10T12:38:21.398Z\",\n    \"updatedAt\": \"2023-11-10T12:38:21.398Z\",\n    \"Categories\": [\n        {\n            \"id\": 1,\n            \"name\": \"Elektronik\"\n        }\n    ],\n    \"User\": {\n        \"id\": 188997,\n        \"full_name\": \"Jhony Brown\",\n        \"email\": \"fb1kbkhvi6@example.com\",\n        \"phone_number\": \"087777125247\",\n        \"address\": \"Jalan Merdeka, Bandung, North Sumatra\",\n        \"image_url\": null,\n        \"city\": \"Bandung\"\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
